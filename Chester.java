@@ -98,7 +98,7 @@ public class Chester {
         Random r = new Random(System.nanoTime());
         Collections.shuffle(storage, r);
         String randomMessage = storage.get(0);
-        String secondPart = storage.get(1);
+        /*String secondPart = storage.get(1);
         
         String[] wordsOne = randomMessage.split(" ");
         String[] wordsTwo = secondPart.split(" ");
@@ -121,9 +121,9 @@ public class Chester {
         while (i != maxTwo) {
             sb.append(wordsTwo[i] + " ");
             i--;
-        }
+        }*/
         
         
-        return sb.toString().trim();
+        return randomMessage;
     }
 }
