@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import java.lang.String;
 import java.io.*;
@@ -94,13 +95,36 @@ public class Chester {
     }
 
     public static String scrambleWord() {
-        Random r = new Random();
-        String randomMessage = storage.get(r.nextInt(storage.size()));
-        String secondRand = storage.get(r.nextInt(storage.size()));
-        int midpoint = randomMessage.length() / 2;
-        String firstHalf = randomMessage.substring(0, midpoint);
-        String secondHalf = secondRand.substring(midpoint);
-        String combine = firstHalf + secondHalf;
-        return combine;
+        Random r = new Random(System.nanoTime());
+        Collections.shuffle(storage, r);
+        String randomMessage = storage.get(0);
+        String secondPart = storage.get(1);
+        
+        String[] wordsOne = randomMessage.split(" ");
+        String[] wordsTwo = secondPart.split(" ");
+        
+        int i = 0;
+        int maxOne = (int) Math.floor(wordsOne.length / 2);
+        StringBuilder sb = new StringBuilder();
+        for (String word: wordsOne) {
+            sb.append(word + " ");
+            i++;
+            if (i == maxOne) {
+                break;
+            }
+        }
+        
+        i = 0;
+        int maxTwo = (int) Math.floor(wordsTwo.length / 2);
+        for (String word: wordsTwo) {
+            sb.append(word + " ");
+            i++;
+            if (i == maxTwo) {
+                break;
+            }
+        }
+        
+        
+        return sb.toString().trim();
     }
 }
