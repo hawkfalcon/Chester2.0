@@ -103,25 +103,24 @@ public class Chester {
         String[] wordsOne = randomMessage.split(" ");
         String[] wordsTwo = secondPart.split(" ");
         
+        
         int i = 0;
         int maxOne = (int) Math.floor(wordsOne.length / 2);
         StringBuilder sb = new StringBuilder();
         for (String word: wordsOne) {
             sb.append(word + " ");
             i++;
+            
             if (i == maxOne) {
                 break;
             }
         }
         
-        i = 0;
+        i = wordsTwo.length;
         int maxTwo = (int) Math.floor(wordsTwo.length / 2);
-        for (String word: wordsTwo) {
-            sb.append(word + " ");
-            i++;
-            if (i == maxTwo) {
-                break;
-            }
+        while (i != maxTwo) {
+            sb.append(wordsTwo[i] + " ");
+            i--;
         }
         
         
