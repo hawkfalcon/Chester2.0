@@ -36,7 +36,7 @@ public class Chester {
                     String message = str.replaceFirst(":.*?:", "");
                     String margs[] = message.split("[ ]+");
                     String channel = str.split(" ")[2];
-                    if (message.contains(nick)) {
+                    if (message.toLowerCase().contains(nick.toLowerCase())) {
                         String randomMessage = scrambleWord();
                         String fixedMessage = truncate((randomMessage), 300).replaceAll("<.*?>", "").replaceAll("\\[.*?\\]", "");
                         o.print("PRIVMSG " + channel + " :" + fixedMessage + "\r\n");
