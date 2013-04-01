@@ -116,7 +116,7 @@ public class Chester {
             }
         }
         
-        i = wordsTwo.length;
+        i = wordsTwo.length - 1;
         int maxTwo = (int) Math.floor(wordsTwo.length / 2);
         while (i != maxTwo) {
             sb.append(wordsTwo[i] + " ");
