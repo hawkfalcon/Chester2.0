@@ -7,10 +7,8 @@ import java.io.*;
 
 public class Chester {
     static ArrayList<String> storage = new ArrayList<String>();
-    static String
-    nick = "hawks_test_bot",
-    serv = "irc.esper.net",
-    chan = "#chester";
+    static String nick = "hawks_test_bot", serv = "irc.esper.net",
+            chan = "#chester";
 
     public static void main(String[] args) throws IOException {
         String str;
@@ -19,9 +17,7 @@ public class Chester {
         PrintWriter o;
         i = new BufferedReader(new InputStreamReader(s.getInputStream()));
         o = new PrintWriter(new OutputStreamWriter(s.getOutputStream()));
-        o.print(
-                "USER " + nick + " 8 * :Chester\r\n" +
-                        "NICK " + nick + "\r\n");
+        o.print("USER " + nick + " 8 * :Chester\r\n" + "NICK " + nick + "\r\n");
         o.flush();
         while (s.isConnected()) {
             str = i.readLine();
@@ -30,32 +26,27 @@ public class Chester {
                 o.print("PONG " + str.substring(5) + "\r\n");
                 o.flush();
             }
-            if (str.charAt(0) == ':'){
+            if (str.charAt(0) == ':') {
                 if (str.split(" ")[1].equals("001")) {
                     loadBrain();
-                    o.print(
-                            "MODE " + nick + " +B\r\n" +
-                            "JOIN " + chan + "\r\n");
+                    o.print("MODE " + nick + " +B\r\n" + "JOIN " + chan + "\r\n");
                     o.flush();
                 } else if (str.split(" ")[1].equals("PRIVMSG")) {
                     String message = str.replaceFirst(":.*?:", "");
                     String margs[] = message.split("[ ]+");
                     String channel = str.split(" ")[2];
-                    if (message.contains(nick)){
+                    if (message.contains(nick)) {
                         String randomMessage = scrambleWord();
                         String fixedMessage = truncate((randomMessage), 300).replaceAll("<.*?>", "").replaceAll("\\[.*?\\]", "");
                         o.print("PRIVMSG " + channel + " :" + fixedMessage + "\r\n");
                         o.flush();
-                    }
-                    else if (message.toLowerCase().startsWith("!hi")){
+                    } else if (message.toLowerCase().startsWith("!hi")) {
                         o.print("PRIVMSG " + channel + " :Hi!\r\n");
                         o.flush();
-                    }
-                    else if (message.startsWith("!join")){
+                    } else if (message.startsWith("!join")) {
                         o.print("JOIN " + margs[1] + "\r\n");
                         o.flush();
-                    }
-                    else {
+                    } else {
                         write(message);
                         storage.add(message);
                     }
@@ -65,6 +56,7 @@ public class Chester {
 
         s.close();
     }
+
     public static void write(String sentence) {
 
         // The name of the file to open.
@@ -76,8 +68,7 @@ public class Chester {
             bufferedWriter.append(sentence);
             bufferedWriter.newLine();
             bufferedWriter.close();
-        }
-        catch(IOException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
@@ -94,13 +85,15 @@ public class Chester {
         br.close();
 
     }
-    public static String truncate(String string, int length){
-        if (string != null && string.length() > length) 
+
+    public static String truncate(String string, int length) {
+        if (string != null && string.length() > length)
             string = string.substring(0, length);
-        return string;  
+        return string;
 
     }
-    public static String scrambleWord(){
+
+    public static String scrambleWord() {
         Random r = new Random();
         String randomMessage = storage.get(r.nextInt(storage.size()));
         String secondRand = storage.get(r.nextInt(storage.size()));
